@@ -1,0 +1,8 @@
+---
+- name: Add Deployment Type + Change Detection Method
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Add Deployment Type + Change Detection Method
+    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\New_Detection_Method.ps1'
