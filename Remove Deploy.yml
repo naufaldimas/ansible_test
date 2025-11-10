@@ -1,0 +1,8 @@
+---
+- name: Delete Deploy
+  hosts: windows_servers
+  gather_facts: no
+
+  tasks:
+  - name: Delete Deploy
+    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\Remove_Deploy.ps1'
