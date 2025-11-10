@@ -1,0 +1,8 @@
+---
+- name: Add Members to Collection
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Add Members to Collection
+    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\Create_New_Collection.ps1'
