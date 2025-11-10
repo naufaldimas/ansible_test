@@ -1,0 +1,8 @@
+---
+- name: Remove Deployment Type
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Remove Deployment Type
+    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\Remove_Deployment_Type.ps1'
