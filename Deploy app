@@ -1,0 +1,8 @@
+---
+- name: Ready to Deploy
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Deploy App
+    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\Deploy_App.ps1'
