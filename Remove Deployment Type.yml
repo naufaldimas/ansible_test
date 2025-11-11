@@ -4,5 +4,19 @@
   gather_facts: no
 
   tasks:
-  - name: Remove Deployment Type
-    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\Remove_Deployment_Type.ps1'
+    - name: Remove Deployment Type
+      win_shell: |
+        Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+        cd "CAS:"
+        $AppName = "Upgrade Test"
+        $DeploymentType = Get-CMDeploymentType -ApplicationName $AppName
+        foreach ($dt in $DeploymentType) {
+            $flag = 1
+            Write-Host "Removing deployment type: $($dt.LocalizedDisplayName)"
+            Remove-CMDeploymentType -ApplicationName $appName -DeploymentTypeName $dt.LocalizedDisplayName -Force
+        }
+        if($flag -eq 1){
+            Write-Host "Berhasil menghapus"
+        } else {
+            Write-Host "Tidak ada Deployment Type"
+        }
