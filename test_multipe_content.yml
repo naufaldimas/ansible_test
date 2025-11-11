@@ -1,0 +1,10 @@
+- name: Split survey input into a list
+  hosts: all
+  tasks:
+    - name: Split names into a list
+      set_fact:
+        name_list: "{{ names.split(',') }}"
+
+    - name: Print name_list
+      debug:
+        var: name_list
