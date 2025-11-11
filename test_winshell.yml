@@ -8,14 +8,6 @@
       win_shell: |
         Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
 
-    - name: Display current directory
+    - name: Change to CAS
       win_shell: |
-        Get-Location
-
-    - name: List files in current directory
-      win_shell: |
-        Get-ChildItem
-
-    - name: Print Hello World
-      win_shell: |
-        Write-Output "Hello World"
+        cd "CAS:"
