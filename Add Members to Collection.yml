@@ -5,4 +5,24 @@
 
   tasks:
   - name: Add Members to Collection
-    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\Create_New_Collection.ps1'
+    win_shell: |
+        Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+        cd "CAS:"
+
+        $collectionName = "Pilot 1"
+
+        # Membuat collection baru
+        # New-CMDeviceCollection -Name $collectionName -LimitingCollectionName "All Systems"
+
+        # Menambah beberapa komputer berdasarkan hostname
+        $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
+        foreach ($hostname in $hostnames) {
+            $device = Get-CMDevice -Name $hostname
+            if ($device) {
+                Add-CMDeviceCollectionDirectMembershipRule -CollectionName $collectionName -ResourceID $device.ResourceID
+                Write-Host "$hostname Berhasil di tambahkan ke $collectionName"
+            } else {
+                Write-Host "$hostname tidak ditemukan di SCCM"
+            }
+        }
+        Invoke-CMDeviceCollectionUpdate -Name $collectionName
