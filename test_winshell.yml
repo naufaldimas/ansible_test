@@ -1,6 +1,6 @@
 ---
 - name: Example Playbook with Multiple Tasks
-  hosts: windows
+  hosts: all
   gather_facts: no
 
   tasks:
