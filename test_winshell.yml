@@ -1,12 +1,21 @@
 ---
-- name: Testing Win Shell
-  hosts: all
+- name: Example Playbook with Multiple Tasks
+  hosts: windows
   gather_facts: no
 
   tasks:
-  - name: Testing Win Shell
-    win_shell: |
-    Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+    - name: Import ConfigurationManager module
+      win_shell: |
+        Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
 
-  - name: Move to CAS
-    command: cd "CAS:"
+    - name: Display current directory
+      win_shell: |
+        Get-Location
+
+    - name: List files in current directory
+      win_shell: |
+        Get-ChildItem
+
+    - name: Print Hello World
+      win_shell: |
+        Write-Output "Hello World"
