@@ -5,8 +5,8 @@
 
   tasks:
   - name: Split names into a list
-      set_fact:
-        hostname_list: "{{ hostnames.split(',') }}"
+    set_fact:
+      hostname_list: "{{ hostnames.split(',') }}"
   
   - name: Add Members to Collection
     win_shell: |
