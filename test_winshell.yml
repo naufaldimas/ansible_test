@@ -3,11 +3,6 @@
   gather_facts: no
 
   tasks:
-    - name: Jalankan perintah PowerShell
-      win_shell: |
-        Get-Process
-      register: hasil_proses
-
     - name: Tampilkan hasil output ke layar
       debug:
         var: hasil_proses.stdout
