@@ -1,13 +1,13 @@
----
-- name: Example Playbook with Multiple Tasks
+- name: Contoh menampilkan output win_shell
   hosts: all
   gather_facts: no
 
   tasks:
-    - name: Import ConfigurationManager module
+    - name: Jalankan perintah PowerShell
       win_shell: |
-        Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+        Get-Process
+      register: hasil_proses
 
-    - name: Change to CAS
-      win_shell: |
-        cd "CAS:"
+    - name: Tampilkan hasil output ke layar
+      debug:
+        var: hasil_proses.stdout
