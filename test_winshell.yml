@@ -1,0 +1,10 @@
+---
+- name: Testing Win Shell
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Testing Win Shell
+    win_shell: |
+    Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+    cd "CAS:"
