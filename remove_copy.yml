@@ -1,19 +1,20 @@
 ---
 - name: Salin folder dari share Windows ke lokal
-  hosts: all 
+  hosts: all
   gather_facts: no       
 
   vars:
     source_network_share: '\\RND1SCCMPS1\Update\*'
-    destination_local_path: '\\RND1SCCMCAS\Update\*'
+    destination_local_path_remove: '\\RND1SCCMCAS\Update\*'
+    destination_local_path: '\\RND1SCCMCAS\Update'
     
 
   tasks:
     - name: 1. Hapus semua file yang ada didalam folder
-      win_shell: Remove-Item -Path "\\RND1SCCMCAS\Update\*"
+      win_shell: Remove-Item -Path "{{ destination_local_path_remove }}"
       
     - name: 2. Salin folder dan isinya dari share ke lokal menggunakan Copy-Item
-      win_shell: Copy-Item -Path "\\RND1SCCMPS1\Update\*" -Destination "\\RND1SCCMCAS\Update"
+      win_shell: Copy-Item -Path "{{ source_network_share }}" -Destination "{{ destination_local_path }}"
       become: yes
       become_method: runas
       become_user: suffer@home.gs.it
