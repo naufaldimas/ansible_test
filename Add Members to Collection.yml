@@ -10,7 +10,7 @@
       
   - name: Print name_list
     debug:
-      var: name_list
+      var: hostname_list
   
   - name: Add Members to Collection
     win_shell: |
