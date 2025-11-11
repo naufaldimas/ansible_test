@@ -3,10 +3,6 @@
   gather_facts: no
 
   tasks:
-    - name: Tampilkan hasil output ke layar
-      win_shell: echo {{ hasil_proses }}
-      register: hasil_proses
-
     - name: Hajar
       debug:
-        var: hasil_proses.stdout
+        var: hasil_proses
