@@ -5,4 +5,23 @@
 
   tasks:
   - name: Add Deployment Type + Change Detection Method
-    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\New_Detection_Method.ps1'
+    win_shell: |
+      Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+      cd "CAS:"
+
+      $AppName = "Upgrade Test"
+
+      $NewDeploymentTypeName = "Upgrade Test Deploy 9"
+
+      $DetectionFilePath = "D:\TestUpgrader\update_9.0.0.zip"
+
+      $fileName = "update_9.0.0.zip"
+
+      $clause = New-CMDetectionClauseFile -Path "D:\TestUpgrader\" -FileName $fileName -Existence
+
+      Add-CMScriptDeploymentType `
+        -ApplicationName $AppName `
+        -DeploymentTypeName $NewDeploymentTypeName `
+        -InstallationProgram "xcopy /E /Y /v \\RND1SCCMCAS\Update\*.* d:\TestUpgrader\" `
+        -AddDetectionClause $clause `
+        -InstallationBehaviorType InstallForSystem
