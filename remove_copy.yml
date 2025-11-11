@@ -15,8 +15,3 @@
       
     - name: 2. Salin folder dan isinya dari share ke lokal menggunakan Copy-Item
       win_shell: Copy-Item -Path "{{ source_network_share }}" -Destination "{{ destination_local_path }}"
-      become: yes
-      become_method: runas
-      become_user: suffer@home.gs.it
-      vars:
-       ansible_become_password: "P@ssw0rd"
