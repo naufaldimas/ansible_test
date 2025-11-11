@@ -4,5 +4,4 @@
 
   tasks:
     - name: Tampilkan hasil output ke layar
-      debug:
-        var: hasil_proses.stdout
+      win_shell: echo {{ hasil_proses }}
