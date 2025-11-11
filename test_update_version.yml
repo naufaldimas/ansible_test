@@ -5,4 +5,21 @@
 
   tasks:
   - name: update version string
-    ansible.windows.win_shell: 'powershell.exe -File G:\APPS\File_Script\Update_Version_String.ps1'
+    win_shell: |
+     Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+     cd "CAS:"
+
+     $AppName = "Upgrade Test"
+     $NewVersion = "9.0.0"
+
+     $Application = Get-CMApplication -Name $AppName
+
+      if ($Application) {
+          Write-Host "Found application: $AppName"
+
+          Set-CMApplication -Id $Application.CI_ID -SoftwareVersion $NewVersion
+
+          Write-Host "Application $AppName has been updated version to $NewVersion."
+      } else {
+          Write-Host "Application $AppName not found!"
+      }
