@@ -1,9 +1,13 @@
 ---
 - name: Add Members to Collection
   hosts: all
-  gather_facts: no
+  gather_facts: yes
 
   tasks:
+  - name: Split names into a list
+      set_fact:
+        hostname_list: "{{ hostnames.split(',') }}"
+  
   - name: Add Members to Collection
     win_shell: |
         Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
@@ -16,7 +20,7 @@
 
         # Menambah beberapa komputer berdasarkan hostname
         # $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
-        foreach ($hostname in {{ hostnames }}) {
+        foreach ($hostname in {{ hostname_list }}) {
             $device = Get-CMDevice -Name $hostname
             if ($device) {
                 Add-CMDeviceCollectionDirectMembershipRule -CollectionName $collectionName -ResourceID $device.ResourceID
