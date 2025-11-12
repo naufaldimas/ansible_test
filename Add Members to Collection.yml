@@ -12,14 +12,6 @@
     debug:
       var: hostname_list
       
-  - name: Convert hostname_list to PowerShell array string
-    set_fact:
-      hostnames_ps: "$hostnames = @({{ hostname_list | map('regex_replace', '^(.*)$', '\"\\1\"') | join(', ') }})"
-
-  - name: looping
-    win_shell: |
-        foreach ($hostname in $hostnames) { Write-Host $hostname }
-  
   - name: Add Members to Collection
     win_shell: |
         Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
@@ -32,7 +24,7 @@
 
         # Menambah beberapa komputer berdasarkan hostname
         # $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
-        # $hostname_list = @({{ hostname_list | map('quote') | join(', ') }})
+        $hostname_list = @({{ hostname_list | map('regex_replace', '^(.*)$', '\"\\1\"') | join(', ') }})
         foreach ($hostname in $hostnames) {
             $device = Get-CMDevice -Name $hostname
             if ($device) {
