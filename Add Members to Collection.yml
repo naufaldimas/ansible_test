@@ -4,16 +4,16 @@
   gather_facts: yes
 
   tasks:
-  - name: Split names into a list
-    set_fact:
-      hostname_list: "{{ hostnames.split(',') }}"
-      
-  - name: Print name_list
-    debug:
-      var: hostname_list
-  
-  - name: Add Members to Collection
-    win_shell: |
+    - name: Split names into a list
+      set_fact:
+        hostname_list: "{{ hostnames.split(',') }}"
+
+    - name: Print name_list
+      debug:
+        var: hostname_list
+
+    - name: Add Members to Collection
+      win_shell: |
         Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
         cd "CAS:"
 
