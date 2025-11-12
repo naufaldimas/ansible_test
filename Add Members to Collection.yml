@@ -24,7 +24,7 @@
 
         # Menambah beberapa komputer berdasarkan hostname
         # $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
-        $hostname_list = @({{ hostname_list | map('string') | map('regex_replace', '(.*)', '"\\1"') | join(', ') }})
+        $hostname_list = @({{ hostname_list | map('string') | join(', ') }})
         foreach ($hostname in $hostname_list) {
             $device = Get-CMDevice -Name $hostname
             if ($device) {
