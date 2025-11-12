@@ -32,5 +32,4 @@
         foreach ($hostname in $hostnames) {
             Write-Host $hostname
           }
-        }
         Invoke-CMDeviceCollectionUpdate -Name $collectionName
