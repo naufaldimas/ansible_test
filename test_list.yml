@@ -1,0 +1,36 @@
+- name: Add Members to Collection
+  hosts: all
+  gather_facts: yes
+
+  vars:
+    hostname_list:
+    - xyz
+    - zyx
+    
+  tasks:
+    - name: Print name_list
+      debug:
+        var: hostname_list
+
+    - name: Convert hostname_list to PowerShell array string
+      set_fact:
+        hostnames_ps: "$hostnames = @({{ hostname_list | map('regex_replace', '^(.*)$', '\"\\1\"') | join(', ') }})"
+      
+    - name: Add Members to Collection
+      win_shell: |
+        Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+        cd "CAS:"
+
+        $collectionName = "Pilot 1"
+
+        # Membuat collection baru
+        # New-CMDeviceCollection -Name $collectionName -LimitingCollectionName "All Systems"
+
+        # Menambah beberapa komputer berdasarkan hostname
+        # $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
+            
+        foreach ($hostname in $hostnames) {
+            Write-Host $hostname
+          }
+        }
+        Invoke-CMDeviceCollectionUpdate -Name $collectionName
