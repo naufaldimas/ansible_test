@@ -11,6 +11,14 @@
   - name: Print name_list
     debug:
       var: hostname_list
+  
+  - name: Add to variable
+    set_fact:
+      hostnames_ps: "@({{ hostname_list | map('regex_replace', '^(.*)$', '\"\\1\"') | join(', ') }})"
+
+  - name: Print variable
+    debug:
+      var: hostnames_ps
       
   - name: Add Members to Collection
     win_shell: |
