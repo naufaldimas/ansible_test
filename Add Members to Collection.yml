@@ -13,8 +13,8 @@
       var: hostname_list
       
   - name: Convert hostname_list to PowerShell array string
-        set_fact:
-          hostnames_ps: "$hostnames = @({{ hostname_list | map('regex_replace', '^(.*)$', '\"\\1\"') | join(', ') }})"
+    set_fact:
+      hostnames_ps: "$hostnames = @({{ hostname_list | map('regex_replace', '^(.*)$', '\"\\1\"') | join(', ') }})"
   
   - name: Add Members to Collection
     win_shell: |
