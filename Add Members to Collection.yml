@@ -15,6 +15,10 @@
   - name: Convert hostname_list to PowerShell array string
     set_fact:
       hostnames_ps: "$hostnames = @({{ hostname_list | map('regex_replace', '^(.*)$', '\"\\1\"') | join(', ') }})"
+
+  - name: looping
+    win_shell: |
+        foreach ($hostname in $hostnames) { Write-Host $hostname }
   
   - name: Add Members to Collection
     win_shell: |
