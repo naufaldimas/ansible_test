@@ -15,3 +15,6 @@
       
     - name: 2. Salin folder dan isinya dari share ke lokal menggunakan Copy-Item
       win_shell: Copy-Item -Path "{{ source_network_share }}" -Destination "{{ destination_local_path }}"
+    
+    - name: 3. Hapus semua file yang ada di dalam folder source
+      win_shell: Remove-Item -Path "{{ source_network_share }}"
