@@ -1,0 +1,9 @@
+---
+- name: Download File From Sharepoint
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Download File From Sharepoint
+    win_shell: |
+      Invoke-WebRequest -Uri "https://dtitesting.sharepoint.com/sites/DomainAdminDev/Shared%20Documents/SCCM_Error_Codes_User_View.xlsx" -OutFile "C:\Update\SCCM_Error_Codes_User_View.xlsx"
