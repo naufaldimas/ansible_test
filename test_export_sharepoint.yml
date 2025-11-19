@@ -6,6 +6,7 @@
   tasks:
   - name: Test Export Sharepoint
     win_shell: |
+      Install-Module ImportExcel -Force
       Import-Module ImportExcel
 
       # Konfigurasi OAuth2
