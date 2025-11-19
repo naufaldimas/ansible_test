@@ -3,6 +3,10 @@
   hosts: all
   gather_facts: no
 
+  vars:
+    xlsxPath: '\\RND1SCCMCAS\Update\SCCM_Error_Codes_User_View.xlsx'
+    csvPath: '\\RND1SCCMCAS\Update\SCCM_Error_Codes_User_View_CSV_Version.csv'
+
   tasks:
   - name: Test Export Sharepoint
     win_shell: |
@@ -35,8 +39,8 @@
       
       # Variabel
       $url = "https://graph.microsoft.com/v1.0/sites/dtitesting.sharepoint.com,ed73db88-c438-443b-bc2a-73afac1086a3,f5472a82-49b9-4231-8ff3-c4e2f7c65489/drive/root:/SCCM_Error_Codes_User_View.xlsx:/content"
-      $localPath = "G:\Update\SCCM_Error_Codes_User_View.xlsx"
-      $csvFile = "G:\Update\SCCM_Error_Codes_User_View_CSV_Version.csv"
+      $localPath = "{{ xlsxPath }}"
+      $csvFile = "{{ csvPath }}"
       
       # Header Authorization
       $headers = @{
