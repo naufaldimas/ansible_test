@@ -1,0 +1,49 @@
+---
+- name: Test Export Sharepoint
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Test Export Sharepoint
+    win_shell: |
+      Import-Module ImportExcel
+
+    # Konfigurasi OAuth2
+    $clientId = "98ceb3b6-54e4-4075-b03f-60197c4afc38"
+    $clientSecret = "ucv8Q~Dds2ROPKhHax2cJUg7gdv1g2wKgCrEDcF~"
+    $tenantId = "838accbb-c0fe-49f4-8d9a-0a6f1ec1c801"
+    $resource = "https://graph.microsoft.com/"
+    $tokenEndpoint = "https://login.microsoftonline.com/$tenantId/oauth2/token"
+    
+    # Fungsi untuk mendapatkan token baru
+    function Get-AccessToken {
+        $body = @{
+            client_id     = $clientId
+            resource      = $resource
+            client_secret = $clientSecret
+            grant_type    = "client_credentials"
+        }
+        $response = Invoke-RestMethod -Method Post -Uri $tokenEndpoint -Body $body
+        return $response.access_token
+    }
+    
+    # Mendapatkan token terbaru
+    $token = Get-AccessToken
+    
+    # $token
+    
+    # Variabel
+    $url = "https://graph.microsoft.com/v1.0/sites/dtitesting.sharepoint.com,ed73db88-c438-443b-bc2a-73afac1086a3,f5472a82-49b9-4231-8ff3-c4e2f7c65489/drive/root:/SCCM_Error_Codes_User_View.xlsx:/content"
+    $localPath = "C:\Update\SCCM_Error_Codes_User_View.xlsx"
+    $csvFile = "C:\Update\SCCM_Error_Codes_User_View_CSV_Version.csv"
+    
+    # Header Authorization
+    $headers = @{
+        "Authorization" = "Bearer $token"
+    }
+    
+    # Download file
+    Invoke-WebRequest -Uri $url -Headers $headers -OutFile $localPath
+    
+    # Export sheet pertama ke CSV
+    Import-Excel -Path $localPath | Export-Csv -Path $csvFile -NoTypeInformation -Encoding Default -Delimiter ';'
