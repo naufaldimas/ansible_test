@@ -5,7 +5,7 @@
   
   vars:
    AppName: 'Upgrade Test'
-   collectionName: 'Dims' 
+   collectionName: 'Pilot 1' 
 
   tasks:
     - name: Remove Deploy Apps
