@@ -24,9 +24,8 @@
 
         # Menambah beberapa komputer berdasarkan hostname
         # $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
-
-        $quotedHostnames = {{ hostnames }} | ForEach-Object { "`"$_`"" }
-        foreach ($hostname in $quotedHostnames ) {
+        
+        foreach ($hostname in {{ hostnames }}) {
             $device = Get-CMDevice -Name $hostname
             if ($device) {
                 Add-CMDeviceCollectionDirectMembershipRule -CollectionName $collectionName -ResourceID $device.ResourceID
