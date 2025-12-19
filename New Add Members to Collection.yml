@@ -24,10 +24,7 @@
 
         # Menambah beberapa komputer berdasarkan hostname
         # $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
-
-        
-        
-        if ({{ item }}) {
+       
             $device = Get-CMDevice -Name {{ item }}
             if ($device) {
                 Add-CMDeviceCollectionDirectMembershipRule -CollectionName $collectionName -ResourceID $device.ResourceID
@@ -35,6 +32,5 @@
             } else {
                 Write-Host "$hostname tidak ditemukan di SCCM"
             }
-        }
         Invoke-CMDeviceCollectionUpdate -Name $collectionName
     loop: "{{ hostname_list }}"
