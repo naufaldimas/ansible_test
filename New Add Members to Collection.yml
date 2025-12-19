@@ -37,4 +37,4 @@
             }
         }
         Invoke-CMDeviceCollectionUpdate -Name $collectionName
-      loop: "{{ hostname_list }}"
+    loop: "{{ hostname_list }}"
