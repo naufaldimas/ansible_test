@@ -1,0 +1,40 @@
+---
+- name: Add Members to Collection
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+  - name: Split names into a list
+    set_fact:
+      hostname_list: "{{ hostnames.split(',') }}"
+      
+  - name: Print name_list
+    debug:
+      var: hostname_list
+      
+  - name: Add Members to Collection
+    win_shell: |
+        Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
+        cd "CAS:"
+
+        $collectionName = "Pilot 1"
+
+        # Membuat collection baru
+        # New-CMDeviceCollection -Name $collectionName -LimitingCollectionName "All Systems"
+
+        # Menambah beberapa komputer berdasarkan hostname
+        # $hostnames = @("RND1ELEVEN", "RND1SCCMPS1")
+
+        
+        
+        if ({{ item }}) {
+            $device = Get-CMDevice -Name {{ item }}
+            if ($device) {
+                Add-CMDeviceCollectionDirectMembershipRule -CollectionName $collectionName -ResourceID $device.ResourceID
+                Write-Host "$hostname Berhasil di tambahkan ke $collectionName"
+            } else {
+                Write-Host "$hostname tidak ditemukan di SCCM"
+            }
+        }
+        Invoke-CMDeviceCollectionUpdate -Name $collectionName
+      loop: "{{ hostname_list }}"
