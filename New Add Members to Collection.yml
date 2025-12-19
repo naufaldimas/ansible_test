@@ -28,9 +28,9 @@
             $device = Get-CMDevice -Name {{ item }}
             if ($device) {
                 Add-CMDeviceCollectionDirectMembershipRule -CollectionName $collectionName -ResourceID $device.ResourceID
-                Write-Host "$hostname Berhasil di tambahkan ke $collectionName"
+                Write-Host "{{ item }} Berhasil di tambahkan ke $collectionName"
             } else {
-                Write-Host "$hostname tidak ditemukan di SCCM"
+                Write-Host "{{ item }} tidak ditemukan di SCCM"
             }
         Invoke-CMDeviceCollectionUpdate -Name $collectionName
     loop: "{{ hostname_list }}"
