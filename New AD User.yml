@@ -1,0 +1,9 @@
+---
+- name: New AD User
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+  - name: New AD User
+    win_shell: |
+        New-ADUser -Name "{{ name }}" -Path "CN=Users,DC=home,DC=gs,DC=it" -GivenName "{{ GivenName }}" -SamAccountName "{{ SamAccountName }}" -AccountPassword (ConvertTo-SecureString -AsPlainText “{{ Password }}” -Force ) -DisplayName "{{ DisplayName }}" -UserPrincipalName "{{ UserPrincipalName }}" -Enabled $True
