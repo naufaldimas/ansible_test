@@ -11,7 +11,7 @@
 
       $AppName = "Upgrade Test"
 
-      $NewDeploymentTypeName = "Upgrade Test Deploy 9"
+      $NewDeploymentTypeName = "Upgrade Test Deploy"
 
       $DetectionFilePath = "D:\TestUpgrader\{{ fileName }}.zip"
 
