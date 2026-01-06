@@ -13,9 +13,9 @@
 
       $NewDeploymentTypeName = "Upgrade Test Deploy 9"
 
-      $DetectionFilePath = "D:\TestUpgrader\update_9.0.0.zip"
+      $DetectionFilePath = "D:\TestUpgrader\{{ fileName }}.zip"
 
-      $fileName = "update_9.0.0.zip"
+      $fileName = "{{ fileName }}.zip"
 
       $clause = New-CMDetectionClauseFile -Path "D:\TestUpgrader\" -FileName $fileName -Existence
 
