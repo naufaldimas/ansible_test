@@ -10,7 +10,7 @@
      cd "CAS:"
 
      $AppName = "Upgrade Test"
-     $NewVersion = "9.0.0"
+     $NewVersion = "{{ NewVersion }}"
 
      $Application = Get-CMApplication -Name $AppName
 
