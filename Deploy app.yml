@@ -11,4 +11,4 @@
 
       $AppName = "Upgrade Test"
 
-      New-CMApplicationDeployment -ApplicationName $AppName -CollectionName "Pilot 1" -DeployAction Install -DeadlineDateTime (Get-Date) -DeployPurpose Available -UserNotification DisplayAll
+      New-CMApplicationDeployment -ApplicationName $AppName -CollectionName "Pilot 1" -DeployAction Install -DeadlineDateTime (Get-Date) -DeployPurpose Required -UserNotification DisplayAll
