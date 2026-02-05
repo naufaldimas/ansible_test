@@ -1,6 +1,6 @@
 ---
 - name: Remove computer object from domain group
-  hosts: windows_domain_controller
+  hosts: all
   gather_facts: no
   vars:
     domain_group: "TestDimasGroup"
