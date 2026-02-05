@@ -2,12 +2,10 @@
 - name: Remove computer object from domain group
   hosts: all
   gather_facts: no
-  vars:
-    domain_group: "TestDimasGroup"
-    computer_name: "RND1CLIENT02$"
+
   tasks:
     - name: Remove computer from domain group
       win_shell: |
-        Remove-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}" -Confirm:$false
+        Remove-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}$" -Confirm:$false
       args:
         executable: powershell
