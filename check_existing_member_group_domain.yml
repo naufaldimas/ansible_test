@@ -1,0 +1,19 @@
+---
+- name: Check if computer is member of domain group
+  hosts: all
+  gather_facts: no
+  vars:
+    domain_group: "DimasTestGroup"
+    computer_name: "RND1CLIENT02$"
+  tasks:
+    - name: Check computer membership in domain group
+      win_shell: |
+        $exists = (Get-ADGroupMember -Identity "{{ domain_group }}" | Where-Object { $_.SamAccountName -eq "{{ computer_name }}" })
+        if ($exists) { Write-Output "YES" } else { Write-Output "NO" }
+      args:
+        executable: powershell
+      register: check_group_member
+
+    - name: Show result
+      debug:
+        msg: "Computer membership: {{ check_group_member.stdout }}"
