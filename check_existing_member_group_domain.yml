@@ -1,5 +1,5 @@
 ---
-- name: Check if computer is member of domain group and show message
+- name: Check computer membership and set message variable
   hosts: all
   gather_facts: no
   vars:
@@ -19,12 +19,16 @@
       set_fact:
         is_member: "{{ check_group_member.stdout | from_json }}"
 
-    - name: Show success message if computer is in group
-      debug:
+    - name: Set success message
+      set_fact:
         message: "Success"
       when: is_member
 
-    - name: Show failed message if computer is NOT in group
-      debug:
-        msg: "Failed, Hostname tidak ada pada Group Domain."
+    - name: Set failed message
+      set_fact:
+        message: "Failed, hostname tidak ada pada Group Domain"
       when: not is_member
+
+    - name: Use message variable (for example, show it)
+      debug:
+        msg: "{{ message }}"
