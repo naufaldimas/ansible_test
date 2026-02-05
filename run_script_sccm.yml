@@ -9,7 +9,7 @@
   tasks:
     - name: Run script on specific device
       win_shell: |
-        Import-Module ($Env:SMS_ADMIN_UI_PATH.Substring(0,$Env:SMS_ADMIN_UI_PATH.Length-5) + '\ConfigurationManager.psd1')
+        Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
         cd "{{ sccm_site_code }}:"
         $device = Get-CMDevice -Name "{{ sccm_device_name }}"
         Invoke-CMRunScript -Device $device -ScriptName "{{ sccm_script_name }}"
