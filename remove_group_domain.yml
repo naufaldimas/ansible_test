@@ -3,8 +3,8 @@
   hosts: windows_domain_controller
   gather_facts: no
   vars:
-    domain_group: "HR-Computers"
-    computer_name: "COMPUTER01$"
+    domain_group: "TestDimasGroup"
+    computer_name: "RND1CLIENT02"
   tasks:
     - name: Remove computer from domain group
       win_shell: |
