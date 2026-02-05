@@ -1,0 +1,18 @@
+---
+- name: Run SCCM script to specific device
+  hosts: all
+  gather_facts: no
+  vars:
+    sccm_site_code: "CAS"
+    sccm_device_name: "RND1CLIENT01"
+    sccm_script_name: "TestScript"
+  tasks:
+    - name: Run script on specific device
+      win_shell: |
+        Import-Module ($Env:SMS_ADMIN_UI_PATH.Substring(0,$Env:SMS_ADMIN_UI_PATH.Length-5) + '\ConfigurationManager.psd1')
+        cd "{{ sccm_site_code }}:"
+        $device = Get-CMDevice -Name "{{ sccm_device_name }}"
+        Invoke-CMRunScript -Device $device -ScriptName "{{ sccm_script_name }}"
+      args:
+        executable: powershell
+      register: sccm_script_result
