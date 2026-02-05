@@ -1,7 +1,7 @@
 ---
 - name: Check if computer is member of domain group (JSON output)
   hosts: all
-  gather_facts: no
+  gather_facts: yes
   vars:
     domain_group: "TestDimasGroup"
     computer_name: "RND1CLIENT02$"
