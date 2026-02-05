@@ -13,7 +13,6 @@
       args:
         executable: powershell
       register: check_group_member
-
     - name: Show result
       debug:
         msg: "Computer membership: {{ check_group_member.stdout }}"
