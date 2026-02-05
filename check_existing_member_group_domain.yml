@@ -1,6 +1,6 @@
 ---
 - name: Check if computer is member of domain group (JSON output)
-  hosts: windows_domain_controller
+  hosts: all
   gather_facts: no
   vars:
     domain_group: "TestDimasGroup"
