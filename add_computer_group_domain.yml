@@ -1,0 +1,11 @@
+---
+- name: Add computer object to domain group
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Add computer to domain group
+      win_shell: |
+        Remove-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}$" -Confirm:$false
+      args:
+        executable: powershell
