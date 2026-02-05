@@ -1,19 +1,24 @@
 ---
-- name: Check if computer is member of domain group
-  hosts: all
+- name: Check if computer is member of domain group (JSON output)
+  hosts: windows_domain_controller
   gather_facts: no
   vars:
     domain_group: "TestDimasGroup"
     computer_name: "RND1CLIENT02$"
   tasks:
-    - name: Check computer membership in domain group
+    - name: Check computer membership in domain group (output JSON)
       win_shell: |
         $exists = (Get-ADGroupMember -Identity "{{ domain_group }}" | Where-Object { $_.SamAccountName -eq "{{ computer_name }}" })
-        if ($exists) { Write-Output "YES" } else { Write-Output "NO" }
+        $result = $exists -ne $null
+        $result | ConvertTo-Json
       args:
         executable: powershell
       register: check_group_member
-      
+
+    - name: Set membership fact
+      set_fact:
+        is_member: "{{ check_group_member.stdout | from_json }}"
+
     - name: Show result
       debug:
-        msg: "Computer membership: {{ check_group_member }}"
+        msg: "Computer {{ computer_name }} is member: {{ is_member }}"
