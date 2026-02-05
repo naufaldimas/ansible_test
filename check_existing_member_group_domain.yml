@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   vars:
-    domain_group: "DimasTestGroup"
+    domain_group: "TestDimasGroup"
     computer_name: "RND1CLIENT02$"
   tasks:
     - name: Check computer membership in domain group
