@@ -4,7 +4,7 @@
   gather_facts: no
   vars:
     domain_group: "TestDimasGroup"
-    computer_name: "RND1CLIENT02"
+    computer_name: "RND1CLIENT02$"
   tasks:
     - name: Remove computer from domain group
       win_shell: |
