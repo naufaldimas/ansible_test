@@ -1,7 +1,7 @@
 ---
-- name: Check if computer is member of domain group (JSON output)
+- name: Check if computer is member of domain group and show message
   hosts: all
-  gather_facts: yes
+  gather_facts: no
   vars:
     domain_group: "TestDimasGroup"
     computer_name: "RND1CLIENT02$"
@@ -19,6 +19,12 @@
       set_fact:
         is_member: "{{ check_group_member.stdout | from_json }}"
 
-    - name: Show result
+    - name: Show success message if computer is in group
       debug:
-        msg: "Computer {{ computer_name }} is member: {{ is_member }}"
+        message: "Success"
+      when: is_member
+
+    - name: Show failed message if computer is NOT in group
+      debug:
+        msg: "Failed, Hostname tidak ada pada Group Domain."
+      when: not is_member
