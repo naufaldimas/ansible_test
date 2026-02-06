@@ -4,7 +4,6 @@
   gather_facts: no
   vars:
     sccm_site_code: "CAS"
-    sccm_device_name: "RND1CLIENT01"
     sccm_script_name: "TestScript"
     script_guid: "35A48C57-B4B2-4323-BDF3-1F9A97ABFBF5"
   tasks:
@@ -12,7 +11,7 @@
       win_shell: |
         Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1"
         cd "{{ sccm_site_code }}:"
-        $device = Get-CMDevice -Name "{{ sccm_device_name }}"
+        $device = Get-CMDevice -Name "{{ computer_name }}"
         Invoke-CMScript -Device $device -ScriptGuid "{{ script_guid }}"
       args:
         executable: powershell
