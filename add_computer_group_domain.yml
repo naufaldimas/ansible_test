@@ -6,7 +6,7 @@
   tasks:
     - name: Add computer to domain group
       win_shell: |
-        Remove-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}$" -Confirm:$false
+        Add-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}$" -Confirm:$false
       args:
         executable: powershell
 
