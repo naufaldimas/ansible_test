@@ -6,6 +6,11 @@
   tasks:
     - name: Add computer to domain group
       win_shell: |
-        Add-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}$" -Confirm:$false
+        Remove-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}$" -Confirm:$false
       args:
         executable: powershell
+
+    - name: Store computer_name for workflow
+      set_stats:
+        data:
+          computer_name: "{{ computer_name }}"
