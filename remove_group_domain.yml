@@ -9,3 +9,8 @@
         Remove-ADGroupMember -Identity "{{ domain_group }}" -Members "{{ computer_name }}$" -Confirm:$false
       args:
         executable: powershell
+
+    - name: Store computer_name for workflow
+      set_stats:
+        data:
+          workflow_computer_name: "{{ computer_name }}"
