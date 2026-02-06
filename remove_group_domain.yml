@@ -13,4 +13,4 @@
     - name: Store computer_name for workflow
       set_stats:
         data:
-          workflow_computer_name: "{{ computer_name }}"
+          computer_name: "{{ computer_name }}"
