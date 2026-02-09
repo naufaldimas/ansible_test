@@ -27,6 +27,11 @@
         message: "Failed, hostname tidak ada pada Group Domain"
       when: not is_member
 
+    - name: Store message for workflow
+      set_stats:
+        data:
+          message: "{{ message }}"
+
     - name: Use message variable (for example, show it)
       debug:
         msg: "{{ message }}"
