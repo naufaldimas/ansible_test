@@ -2,13 +2,11 @@
 - name: Check computer membership and set message variable
   hosts: all
   gather_facts: no
-  vars:
-    domain_group: "TestDimasGroup"
-    computer_name: "RND1CLIENT02$"
+  
   tasks:
     - name: Check computer membership in domain group (output JSON)
       win_shell: |
-        $exists = (Get-ADGroupMember -Identity "{{ domain_group }}" | Where-Object { $_.SamAccountName -eq "{{ computer_name }}" })
+        $exists = (Get-ADGroupMember -Identity "{{ domain_group }}" | Where-Object { $_.SamAccountName -eq "{{ computer_name }}$" })
         $result = $exists -ne $null
         $result | ConvertTo-Json
       args:
