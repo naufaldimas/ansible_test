@@ -13,6 +13,3 @@
         cd "{{ sccm_site_code }}:"
         $device = Get-CMDevice -Name "{{ computer_name }}"
         Invoke-CMScript -Device $device -ScriptGuid "{{ script_guid }}"
-      args:
-        executable: powershell
-      register: sccm_script_result
