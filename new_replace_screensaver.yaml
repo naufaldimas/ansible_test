@@ -1,34 +1,21 @@
----
-- name: Download zip dan extract ke folder SCCM
+- name: Download file langsung ke folder SCCM
   hosts: all
   gather_facts: no
 
-
-
   vars:
-    attachment_url: "https://dev-brg-myservice.dti.co.id/uat/myservice_ws_others/Routing/GetAttachment?recidatt=01A115610EFF4EA59D6490F7A755ADC8"
-    zip_file: 'C:\Temp\attachments.zip'
-    destination_folder: '\\RND1SCCMCAS\ScreenSaver'
-
-
+    attachment_url: "https://dev-brg-myservice.dti.co.id/uat/myservice_ws_others/Routing/GetAttachment?recidatt=01A115610EFF4EA59D6490F7A755ADC8"
+    destination_folder: '\\RND1SCCMCAS\ScreenSaver'
+    destination_file: '\\RND1SCCMCAS\ScreenSaver\computer.png'
 
   tasks:
-    - name: Download zip
-      win_get_url:
-        url: "{{ attachment_url }}"
-        dest: "{{ zip_file }}"
-        force: yes
-        validate_certs: no
+    - name: Pastikan folder tujuan ada
+      win_file:
+        path: "{{ destination_folder }}"
+        state: directory
 
-
-
-    - name: Pastikan folder tujuan ada
-      win_file:
-        path: "{{ destination_folder }}"
-        state: directory
-
-
-
-    - name: Extract zip
-      win_shell: |
-        Expand-Archive -Path "{{ zip_file }}" -DestinationPath "{{ destination_folder }}" -Force
+    - name: Download file langsung ke shared folder
+      win_get_url:
+        url: "{{ attachment_url }}"
+        dest: "{{ destination_file }}"
+        force: yes
+        validate_certs: no
